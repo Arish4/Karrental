@@ -28,7 +28,7 @@ exports.getCars = async (req, res) => {
 
         // Convert image filenames to full URLs before sending response
         const carsWithFullImageUrl = cars.map(car => ({
-            ...car.toObject(),
+            ...car.toObject(), //(...) is used for the brand,name etc, map uses for loop
             image: `${req.protocol}://${req.get('host')}/uploads/${car.image}`
         }));
 
@@ -40,7 +40,7 @@ exports.getCars = async (req, res) => {
 
 exports.updateCar = async (req, res) => {
     try {
-        const car = await Car.findById(req.params.id);
+        const car = await Car.findById(req.params.id); // to find out specific item by id
         if (!car || car.user.toString() !== req.user.id) {
             return res.status(403).json({ error: 'Unauthorized' });
         }
